@@ -1,4 +1,4 @@
-# Ring DAO: LSAG signature evm-verifier
+# Ring Signatures DAO: Governance contracts
 
 ## Overview
 
