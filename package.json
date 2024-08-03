@@ -1,0 +1,33 @@
+{
+  "name": "ring-signature-dao",
+  "version": "0.0.1",
+  "description": "a set of smart contracts for a confidential DAO",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx hardhat test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "fmt:check": "npm run prettier && npm run lint",
+    "fmt": "npm run prettier:fix && npm run lint:fix"
+  },
+  "author": "Elli610",
+  "keywords": ["DAO", "ring signature", "confidentiality", "privacy", "blockchain", "ethereum", "solidity"],
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "eth-gas-reporter": "^0.2.27",
+    "hardhat": "2.19.0",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2",
+    "@types/node": "^20.4.2",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "eslint": "^8.44.0",
+    "ethers": "^6.8.1"
+  }
+}
