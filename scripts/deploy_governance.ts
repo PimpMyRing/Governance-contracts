@@ -1,12 +1,22 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  // Replace 'LSAGVerifier' with the name of your contract
-  const Governance = await ethers.deployContract("DAOofTheRing");
-  const gov = await Governance.waitForDeployment();
+  // Deploy the LSAGVerifier library
+  const LSAGVerifier = await ethers.getContractFactory("LSAGVerifier");
+  const lsagVerifier = await LSAGVerifier.deploy();
 
+  console.log("LSAGVerifier deployed to:", lsagVerifier.target);
 
-  console.log("DAOofTheRing deployed to:", gov.target);
+  // Link the LSAGVerifier library to the DAOofTheRing contract
+  const GovernanceFactory = await ethers.getContractFactory("DAOofTheRing", {
+    libraries: {
+      LSAGVerifier: lsagVerifier.target,
+    },
+  });
+
+  const governance = await GovernanceFactory.deploy();
+
+  console.log("DAOofTheRing deployed to:", governance.target);
 }
 
 main().catch((error) => {
