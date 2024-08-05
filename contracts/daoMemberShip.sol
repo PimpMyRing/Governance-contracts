@@ -32,11 +32,11 @@ contract DaoMemberShip is ERC721 {
         revert("transfer is locked");
     }
 
-    function mint(uint8 privacyLevel) public {
+    function mint(uint8 level) public {
         // only one token per address
         require(balanceOf(msg.sender) == 0, "only one token per address");
 
-        privacyLevel[msg.sender] = privacyLevel;
+        privacyLevel[msg.sender] = level;
         _mint(msg.sender, nextid);
         nextid++;
     }

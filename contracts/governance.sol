@@ -5,7 +5,7 @@ pragma solidity ^0.8.20;
 import {DaoMemberShip} from "./daoMemberShip.sol";
 import {LSAGVerifier} from "./lsag-verifier.sol";
 
-contract RingDao {
+contract DAOofTheRing {
     DaoMemberShip memberShipNft;
 
     uint256 public proposalCount = 0;
@@ -33,7 +33,7 @@ contract RingDao {
         memberShipNft = new DaoMemberShip();
 
         // deployer is the first member
-        DaoMemberShip(memberShipNft).mint();
+        memberShipNft.mint(0);
     }
 
     function newProposal(
@@ -74,7 +74,7 @@ contract RingDao {
         string memory linkabilityFlag,
         uint256[] memory witnesses
     ) public {
-        uint256 message = uint256(keccak256(abi.encodePacked(_description, target, value, calldata)));
+        uint256 message = uint256(keccak256(abi.encodePacked(_description, target, value, callData)));
         // require all the ring members to be part of the dao
         for (uint256 i = 0; i < ring.length; i += 2) {
             require(

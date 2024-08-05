@@ -13,10 +13,19 @@
     "fmt": "npm run prettier:fix && npm run lint:fix"
   },
   "author": "Elli610",
-  "keywords": ["DAO", "ring signature", "confidentiality", "privacy", "blockchain", "ethereum", "solidity"],
+  "keywords": [
+    "DAO",
+    "ring signature",
+    "confidentiality",
+    "privacy",
+    "blockchain",
+    "ethereum",
+    "solidity"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.9",
     "eth-gas-reporter": "^0.2.27",
     "hardhat": "2.19.0",
     "prettier": "^3.0.0",
@@ -27,6 +36,7 @@
     "@types/node": "^20.4.2",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
+    "dotenv": "^16.4.5",
     "eslint": "^8.44.0",
     "ethers": "^6.8.1"
   }
