@@ -74,7 +74,7 @@ contract RingDao {
         string memory linkabilityFlag,
         uint256[] memory witnesses
     ) public {
-        uint256 message = uint256(keccak256(abi.encodePacked(_description))); // abi encoded: _description (string), target(address), value(uint256), calldata(bytes)
+        uint256 message = uint256(keccak256(abi.encodePacked(_description, target, value, calldata)));
         // require all the ring members to be part of the dao
         for (uint256 i = 0; i < ring.length; i += 2) {
             require(
