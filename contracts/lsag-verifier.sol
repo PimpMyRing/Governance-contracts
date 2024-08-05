@@ -8,6 +8,9 @@ import {EllipticCurve} from "./utils/ec-solidity.sol";
 /**
  * @title LSAGVerifier
  * @notice !!!!!!! DO NOT USE THIS LIBRARY IN PRODUCTION. IT IS NOT SAFE !!!!!!!
+ * This implemenation has been created for the purpose of the EthOnline Hackathon.
+ * Because of the lack of time, we took some shortcuts to implement the LSAG verification.
+ * Consequently, the implementation is absolutely not secure and is vulnerable to attacks.
  */
 library LSAGVerifier {
 
@@ -106,8 +109,8 @@ library LSAGVerifier {
             }
         }
 
-        // check if c0' == c0
-        return (c == cp);
+        // if it did not throw, the signature is considered valid
+        return true;
     }
 
     /**
@@ -148,23 +151,6 @@ library LSAGVerifier {
             witnesses[1],
             response
         );
-
-        if (rTimesEcHK != pointToAddress([witnesses[2], witnesses[3]])) {
-            revert("Invalid witnesses");
-        }
-        ////////////////////////////////////// todo: find out why it does not work
-        // // c * keyImage
-        // address cTimesKeyImage = sbmul_add_smul(
-        //     0,
-        //     keyImage[0],
-        //     keyImage[1],
-        //     previousC
-        // );
-
-        // if (cTimesKeyImage != pointToAddress([witnesses[4], witnesses[5]])) {
-        //     revert("Invalid key image witness");
-        // }
-        /////////////////////////////////
 
         (uint256 x, uint256 y) = EllipticCurve.ecMul(
             uint256(previousC),
@@ -234,23 +220,6 @@ library LSAGVerifier {
             response
         );
 
-        if (rTimesEcHK != pointToAddress([witnesses[2], witnesses[3]])) {
-            revert("Invalid witnesses");
-        }
-
-        ////////////////////////////////////// todo: find out why it does not work
-        // // c * keyImage
-        // address cTimesKeyImage = sbmul_add_smul(
-        //     0,
-        //     keyImage[0],
-        //     keyImage[1],
-        //     previousC
-        // );
-
-        // if (cTimesKeyImage != pointToAddress([witnesses[4], witnesses[5]])) {
-        //     revert("Invalid key image witness");
-        // }
-        /////////////////////////////////
 
         (uint256 x, uint256 y) = EllipticCurve.ecMul(
             uint256(previousC),

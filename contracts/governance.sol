@@ -74,7 +74,9 @@ contract DAOofTheRing {
         string memory linkabilityFlag,
         uint256[] memory witnesses
     ) public {
-        uint256 message = uint256(keccak256(abi.encodePacked(_description, target, value, callData)));
+        uint256 message = uint256(
+            keccak256(abi.encodePacked(_description, target, value, callData))
+        );
         // require all the ring members to be part of the dao
         for (uint256 i = 0; i < ring.length; i += 2) {
             require(
@@ -84,9 +86,8 @@ contract DAOofTheRing {
                 "all ring members should be part of the dao"
             );
         }
-        // only member can create proposal
         require(
-            LSAGVerifier.verify(
+            LSAGVerifier.verify( // todo: replace by sag for increased privacy + efficiency
                 message,
                 ring,
                 responses,
@@ -95,7 +96,7 @@ contract DAOofTheRing {
                 linkabilityFlag,
                 witnesses
             ),
-            "only member can create proposal"
+            "invalid ring signature"
         );
 
         // create proposal
@@ -236,7 +237,13 @@ contract DAOofTheRing {
         // execute proposal
         proposals[_proposalId].executed = true;
 
-
-        (bool success, ) = proposals[_proposalId].target.call{value: proposals[_proposalId].value}(proposals[_proposalId].callData);
+        if (
+            proposals[_proposalId].target !=
+            address(0x0000000000000000000000000000000000000000)
+        ) {
+            (bool success, ) = proposals[_proposalId].target.call{
+                value: proposals[_proposalId].value
+            }(proposals[_proposalId].callData);
+        }
     }
 }
