@@ -73,7 +73,7 @@ contract DAOofTheRing {
         uint256[2] memory keyImage,
         string memory linkabilityFlag,
         uint256[] memory witnesses
-    ) public {
+    ) public returns (uint256) {
         uint256 message = uint256(
             keccak256(abi.encodePacked(_description, target, value, callData))
         );
@@ -110,6 +110,10 @@ contract DAOofTheRing {
             value: value,
             callData: callData
         });
+
+        proposalCount++;
+
+        return proposalCount - 1;
     }
 
     function voteTrue(
