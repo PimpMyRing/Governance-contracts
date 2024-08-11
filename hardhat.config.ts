@@ -9,7 +9,9 @@ const config: HardhatUserConfig = {
   solidity: "0.8.20",
   etherscan: {
     apiKey: {
-      optimismSepolia: process.env.OP_SEPOLIA_ETHERSCAN_API_KEY || '',
+      optimismSepolia: process.env.OP_ETHERSCAN_API_KEY || '',
+      optimism: process.env.OP_ETHERSCAN_API_KEY || '',
+      baseMainnet: process.env.BASE_ETHERSCAN_API_KEY || '',
     },
     customChains: [
       {
@@ -19,7 +21,23 @@ const config: HardhatUserConfig = {
           apiURL: "https://api-sepolia-optimistic.etherscan.io/api",
           browserURL: "https://sepolia-optimism.etherscan.io/"
         }
-      }
+      },
+      {
+        network: "optimism",
+        chainId: 10,
+        urls: {
+          apiURL: "https://api-optimistic.etherscan.io/api",
+          browserURL: "https://optimistic.etherscan.io/"
+        }
+      },
+      {
+        network: "baseMainnet",
+        chainId: 8453,
+        urls: {
+          apiURL: "https://api.basescan.org/api",
+          browserURL: "https://basescan.org/"
+        }
+      },
     ]
   },
   
