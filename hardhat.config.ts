@@ -8,7 +8,19 @@ dotenv.config();
 const config: HardhatUserConfig = {
   solidity: "0.8.20",
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      optimismSepolia: process.env.OP_SEPOLIA_ETHERSCAN_API_KEY || '',
+    },
+    customChains: [
+      {
+        network: "optimismSepolia",
+        chainId: 11155420,
+        urls: {
+          apiURL: "https://api-sepolia-optimistic.etherscan.io/api",
+          browserURL: "https://sepolia-optimism.etherscan.io/"
+        }
+      }
+    ]
   },
   
   networks: {
