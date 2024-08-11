@@ -53,6 +53,6 @@ contract DaoMemberShip is ERC721 {
     }
 
     function totalSupply() public view returns (uint256) {
-        return nextid; // nextid is always the total supply (last index is nextid - 1 but we need to add 1 to count the index 0)
+        return nextid - 1;
     }
 }
