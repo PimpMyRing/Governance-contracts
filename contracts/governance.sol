@@ -29,6 +29,29 @@ contract DAOofTheRing {
     // proposal id => voted
     mapping(uint256 => mapping(address => bool)) public voted;
 
+    event newAnonProposalEvent(
+        uint256 proposalId,
+        string description,
+        address target,
+        uint256 value,
+        bytes callData
+    );
+    event newProposalEvent(
+        address proposer,
+        uint256 proposalId,
+        string description,
+        address target,
+        uint256 value,
+        bytes callData
+    );
+    event votedEvent(
+        uint256 proposalId,
+        uint256[2] voterKeyImage,
+        bool vote,
+        uint256 voteForCount,
+        uint256 voteAgainstCount
+    );
+
     constructor() {
         memberShipNft = new DaoMemberShip();
 
@@ -41,7 +64,7 @@ contract DAOofTheRing {
         address target,
         uint256 value,
         bytes memory callData
-    ) public {
+    ) public returns (uint256) {
         // which data ? full proposal, ipfs uri or only new bytecode hash?
         // only member can create proposal
         require(
@@ -60,6 +83,19 @@ contract DAOofTheRing {
             value: value,
             callData: callData
         });
+
+        emit newProposalEvent(
+            msg.sender,
+            proposalCount,
+            _description,
+            target,
+            value,
+            callData
+        );
+
+        proposalCount++;
+
+        return proposalCount - 1;
     }
 
     function anonProposal(
@@ -110,6 +146,14 @@ contract DAOofTheRing {
             value: value,
             callData: callData
         });
+
+        emit newAnonProposalEvent(
+            proposalCount,
+            _description,
+            target,
+            value,
+            callData
+        );
 
         proposalCount++;
 
@@ -164,6 +208,14 @@ contract DAOofTheRing {
 
         // mark keyImage as voted
         voted[_proposalId][member] = true;
+
+        emit votedEvent(
+            _proposalId,
+            keyImage,
+            true,
+            proposals[_proposalId].voteForCount,
+            proposals[_proposalId].voteAgainstCount
+        );
     }
 
     function voteFalse(
@@ -214,6 +266,14 @@ contract DAOofTheRing {
 
         // mark keyImage as voted
         voted[_proposalId][member] = true;
+
+        emit votedEvent(
+            _proposalId,
+            keyImage,
+            false,
+            proposals[_proposalId].voteForCount,
+            proposals[_proposalId].voteAgainstCount
+        );
     }
 
     function executeProposal(uint256 _proposalId) public {
